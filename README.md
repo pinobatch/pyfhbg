@@ -8,7 +8,7 @@ them to defeat them.  It is the direct predecessor of two of
 NovaSquirrel's later games:
 
 * [_Double Action Blaster Guys_][1] (_DABG_), an elaboration
-* [_FHBG_ for Game Boy Color], an enhanced remake
+* [_FHBG_ for Game Boy Color][2], an enhanced remake
 
 _PyFHBG_ is an attempt to take _FHBG_ in a slightly more serious
 direction.
@@ -31,7 +31,27 @@ try this:
     sudo apt install python3-pygame
     python3 fhbg.py
 
+Why SDL 1.2?
+------------
+Pygame uses SDL 1.2.  When exporting a replay as a video, the game
+uses `pygame.image.tostring()` to capture the video to an RGB byte
+string and then feed it to FFmpeg.  (See `enlarger.py`.)  I know of
+two SDL 2-based replacements for Pygame, neither of which has any
+counterpart to `pygame.image.tostring()`
+
+[PySDL2 docs][3] state:
+
+> tostring(): No equivalent yet
+
+The README for the Ren'Py project's [pygame_sdl2][4] states:
+
+> Current omissions include:  
+> APIs that expose pygame data as buffers or arrays.
+
 License choice is pending.
+
 
 [1]: https://github.com/NovaSquirrel/DABG
 [2]: https://github.com/NovaSquirrel/GameBoyFHBG
+[3]: https://pysdl2.readthedocs.io/en/rel_0_9_6/tutorial/pygamers.html#pygame-image
+[4]: https://github.com/renpy/pygame_sdl2
