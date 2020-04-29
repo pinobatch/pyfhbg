@@ -14,6 +14,7 @@ keybindings_filename = "fhbg.kyb"
 mixer_freq = 44100
 with_double = True
 with_fullscreen = False
+with_music = True
 
 # False (no video output), True (raw RGB24 frames to vtee.raw),
 # or 'pipe' (through vidcap_pipe_cmd)
@@ -476,6 +477,8 @@ def main():
     joycfg.dump_joysticks(verbose=False)
     wndicon = G.image.load('tilesets/wndicon32.png')
     G.display.set_icon(wndicon)
+    if with_music:
+        G.mixer.music.load('audio/RescueMission.ogg')
     view = FHBGView()
     game = FHBGGame(view)
     view.bindings = joycfg.load_bindings(keybindings_filename)
@@ -538,7 +541,11 @@ def main():
                     break
                 game.new_game()
                 game.pf.sheet = view.metatile_sheet
+                if with_music:
+                    G.mixer.music.set_volume(.7)
+                    G.mixer.music.play(-1)
                 result = play_level(view, game, game.levels[ls_level])
+                G.mixer.music.stop()
                 if result == 'q':
                     quitting = True
             continue
@@ -548,7 +555,11 @@ def main():
         elif selected == 4:  # help
             e = coprscreen(view, helpScreenText)
             continue
+        if with_music:
+            G.mixer.music.set_volume(.7)
+            G.mixer.music.play(-1)
         result = play_game(view, game)
+        G.mixer.music.stop()
         if result == 'q':
             quitting = True
 
